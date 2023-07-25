@@ -81,6 +81,13 @@ module OpenIDConnect
     end
     @@http_config ||= block
   end
+  def self.set_http_config(&block)
+    @sub_protocols.each do |klass|
+      klass.reset_http_config!
+      klass.http_config(&block)
+    end
+    @@http_config = block
+  end
 
   def self.validate_discovery_issuer=(boolean)
     @@validate_discovery_issuer = boolean
